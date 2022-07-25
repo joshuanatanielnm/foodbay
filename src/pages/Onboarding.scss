@@ -1,0 +1,48 @@
+ion-slides {
+  height: 100%;
+}
+
+ion-slide {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+
+ion-slide ion-button {
+  width:100%;
+  border-radius: 40% !important;
+  background-color: var(--ion-color-primary);
+  margin-top: 30px;
+}
+
+.image-container{
+  height: 45vh;
+}
+
+.slider-text {
+ height: 20vh;
+ font-style: normal !important;
+}
+
+.slider-text h2 {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+.slider-text p {
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  color:#616161;
+}
+
+.navigator {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
