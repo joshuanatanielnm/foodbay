@@ -5,6 +5,16 @@ http://ionicframework.com/docs/theming/ */
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.text-gray-1 {
+  color: #9e9e9e;
+}
+.text-gray-2 {
+  color: #757575;
+}
+.text-gray-3 {
+  color: #c2c2c2;
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
