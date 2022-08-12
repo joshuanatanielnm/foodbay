@@ -1,13 +1,31 @@
 import { IonSlides, IonSlide, IonContent, IonButton } from "@ionic/react";
-import "./Onboarding.scss";
+import { useRef } from "react";
+import "../styles/Onboarding.scss";
 
 const Onboarding = () => {
   const slideOpts = {
     speed: 400,
   };
+  const mySlides = useRef(null);
+
+  const onBtnClicked = async (direction: string) => {
+    //@ts-ignore
+    const swiper = await mySlides.current.getSwiper();
+    if (direction === "next") {
+      swiper.slideNext();
+    } else if (direction === "prev") {
+      swiper.slidePrev();
+    }
+  };
+
   return (
     <IonContent fullscreen>
-      <IonSlides pager={true} options={slideOpts} className="ion">
+      <IonSlides
+        pager={true}
+        options={slideOpts}
+        className="ion"
+        ref={mySlides}
+      >
         <IonSlide>
           <div className="image-container">
             <img src="/assets/ilu1.png" alt="ilu1" />
@@ -20,7 +38,7 @@ const Onboarding = () => {
               untuk kebutuhan panganmu
             </p>
           </div>
-          <IonButton>Lewati</IonButton>
+          <IonButton onClick={() => onBtnClicked("next")}>Lewati</IonButton>
         </IonSlide>
         <IonSlide>
           <div className="image-container">
@@ -34,7 +52,7 @@ const Onboarding = () => {
               cara berbagi makanan
             </p>
           </div>
-          <IonButton>Lewati</IonButton>
+          <IonButton onClick={() => onBtnClicked("next")}>Lewati</IonButton>
         </IonSlide>
         <IonSlide>
           <div className="image-container">
@@ -48,7 +66,7 @@ const Onboarding = () => {
               dunia melalui pangan
             </p>
           </div>
-          <IonButton>Mulai</IonButton>
+          <IonButton href="/signin">Mulai</IonButton>
         </IonSlide>
       </IonSlides>
     </IonContent>
