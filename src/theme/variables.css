@@ -15,6 +15,17 @@ http://ionicframework.com/docs/theming/ */
   color: #c2c2c2;
 }
 
+.width-full {
+  width: "100%";
+}
+
+ion-toolbar {
+  height: 48px;
+  padding-left: 10px;
+  padding-right: 24px;
+  background-color: white;
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
