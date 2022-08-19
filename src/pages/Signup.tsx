@@ -149,8 +149,8 @@ export function Signup() {
                     </IonButton>
                   </IonCol>
                   <IonCol size="12">
-                    <IonText>Belum punya akun?</IonText>{" "}
-                    <IonRouterLink href="/signup">Buat akun</IonRouterLink>
+                    <IonText>Sudah punya akun?</IonText>{" "}
+                    <IonRouterLink href="/signin">SignIn</IonRouterLink>
                   </IonCol>
                 </IonRow>
               </Form>
