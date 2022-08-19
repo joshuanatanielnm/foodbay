@@ -1,7 +1,6 @@
-import { Redirect, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 import { IonApp, IonRouterOutlet, setupIonicReact } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import Home from "./pages/Home";
 
 /* Core CSS required for Ionic components to work properly */
 import "@ionic/react/css/core.css";
@@ -22,22 +21,38 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import Onboarding from "./pages/Onboarding";
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
+import { Profile } from "./pages/Profile";
+import UpdateProfile from "./pages/UpdateProfile";
+import { Bantuan } from "./pages/Bantuan";
+import { Invitation } from "./pages/Invitation";
+import { Policy } from "./pages/Policy";
+import { Terms } from "./pages/Terms";
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonRouterOutlet>
-        <Route exact path="/home">
-          <Onboarding />
-        </Route>
-        <Route exact path="/">
-          <Redirect to="/home" />
-        </Route>
-      </IonRouterOutlet>
-    </IonReactRouter>
-  </IonApp>
-);
+const App: React.FC = () => {
+  const { isLoggedIn } = {
+    isLoggedIn: false,
+  };
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonRouterOutlet>
+          <Route path="/" component={Onboarding} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/signin" component={Signin} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/update-profile" component={UpdateProfile} />
+          <Route path="/help" component={Bantuan} />
+          <Route path="/invite-friend" component={Invitation} />
+          <Route path="/policy" component={Policy} />
+          <Route path="/terms" component={Terms} />
+        </IonRouterOutlet>
+      </IonReactRouter>
+    </IonApp>
+  );
+};
 
 export default App;
