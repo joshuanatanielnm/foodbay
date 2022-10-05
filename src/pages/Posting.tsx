@@ -20,6 +20,10 @@ import { Form, Formik } from "formik";
 import { arrowBack, chevronDownOutline } from "ionicons/icons";
 import { useEffect, useRef, useState } from "react";
 import { Content } from "../layout/Content";
+import { projectStorage } from "../firebase/config";
+import axios from "axios";
+import { userProps } from "./Profile";
+import { useHistory } from "react-router-dom";
 
 type KotaProps = {
   provinsi: string;
@@ -29,12 +33,13 @@ export const Posting = () => {
   const modalLokasi = useRef<HTMLIonModalElement>(null);
   const modalKategori = useRef<HTMLIonModalElement>(null);
   const item = useRef<HTMLIonLabelElement>(null);
+  const history = useHistory();
   const defaultValues = {
-    judul: "",
-    deskripsi: "",
-    kategori: "",
-    lokasi: "",
-    gambar: "",
+    postingTitle: "",
+    postingDescription: "",
+    postingCategory: "",
+    postingLocation: "",
+    postingImage: "",
   };
   const kategori = [
     "Buah",
@@ -50,12 +55,62 @@ export const Posting = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [kota, setKota] = useState([]);
   const [selectedKota, setSelectedKota] = useState();
+  const event = new Date();
+  const [storageData, setStorageData] = useState<userProps>();
+  const [iserror, setIserror] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
+
+  useEffect(() => {
+    async function getStorageData() {
+      const getdata = window.localStorage.getItem("user");
+      getdata && setStorageData(JSON.parse(getdata));
+    }
+    getStorageData();
+  }, []);
 
   const fetchDataKota = async () => {
     const data = await fetch(
       "https://raw.githubusercontent.com/mtegarsantosa/json-nama-daerah-indonesia/master/regions.json"
     );
     return data.json();
+  };
+
+  const addFoodData = async (values: any) => {
+    const storageRef = projectStorage
+      .ref(`images/${values.postingImage.name}`)
+      .put(values.postingImage);
+
+    await storageRef.on(
+      "state_changed",
+      (snapshot) => {},
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        projectStorage
+          .ref("images")
+          .child(values.postingImage.name)
+          .getDownloadURL()
+          .then((url) => {
+            axios
+              .post("http://localhost:8080/posting", {
+                userId: storageData?.user.id,
+                postingTitle: values.postingTitle,
+                postingDescription: values.postingDescription,
+                postingCategory: values.postingCategory,
+                postingLocation: values.postingLocation,
+                postingImage: url,
+              })
+              .then((res) => {
+                history.push("/home");
+              })
+              .catch(() => {
+                setMessage("gagal tambah makanan");
+                setIserror(true);
+              });
+          });
+      }
+    );
   };
 
   useEffect(() => {
@@ -85,19 +140,18 @@ export const Posting = () => {
         <IonContent fullscreen className="ion-padding">
           <Formik
             initialValues={state}
-            onSubmit={() => console.log("submited")}
+            onSubmit={addFoodData}
             enableReinitialize
           >
             {(formikProps) => {
-              console.log(formikProps.values);
               return (
                 <Form id="login">
                   <IonList className="transparent">
                     <IonItem className="input-rounded" lines="none">
                       <IonInput
-                        name="judul"
+                        name="postingTitle"
                         placeholder="Judul"
-                        value={formikProps.values.judul}
+                        value={formikProps.values.postingTitle}
                         spellCheck={false}
                         autocapitalize="off"
                         onIonChange={formikProps.handleChange}
@@ -106,9 +160,9 @@ export const Posting = () => {
                     </IonItem>
                     <IonItem className="input-rounded" lines="none">
                       <IonTextarea
-                        name="deskripsi"
+                        name="postingDescription"
                         placeholder="Deskripsi"
-                        value={formikProps.values.deskripsi}
+                        value={formikProps.values.postingDescription}
                         spellCheck={false}
                         autocapitalize="off"
                         onIonChange={formikProps.handleChange}
@@ -117,9 +171,9 @@ export const Posting = () => {
                     </IonItem>
                     <IonItem className="input-rounded" lines="none">
                       <IonInput
-                        name="kategori"
+                        name="postingCategory"
                         placeholder="kategori"
-                        value={formikProps.values.kategori}
+                        value={formikProps.values.postingCategory}
                         clearOnEdit={false}
                         id="open-modal-kategori"
                       />
@@ -127,9 +181,9 @@ export const Posting = () => {
                     </IonItem>
                     <IonItem className="input-rounded" lines="none">
                       <IonInput
-                        name="lokasi"
+                        name="postingLocation"
                         placeholder="Lokasi"
-                        value={formikProps.values.lokasi}
+                        value={formikProps.values.postingLocation}
                         clearOnEdit={false}
                         id="open-modal-lokasi"
                       />
@@ -138,12 +192,12 @@ export const Posting = () => {
                     <IonItem lines="none">
                       <input
                         id="file"
-                        name="gambar"
+                        name="postingImage"
                         type="file"
                         required
                         onChange={(event) => {
                           formikProps.setFieldValue(
-                            "gambar",
+                            "postingImage",
                             //@ts-ignore
                             event.currentTarget.files[0]
                           );
@@ -159,7 +213,10 @@ export const Posting = () => {
                     trigger="open-modal-kategori"
                     onWillDismiss={(ev) => {
                       if (ev.detail.role === "confirmKategori") {
-                        formikProps.setFieldValue("kategori", ev.detail.data);
+                        formikProps.setFieldValue(
+                          "postingCategory",
+                          ev.detail.data
+                        );
                       }
                     }}
                   >
@@ -190,7 +247,10 @@ export const Posting = () => {
                     trigger="open-modal-lokasi"
                     onWillDismiss={(ev) => {
                       if (ev.detail.role === "confirmLokasi") {
-                        formikProps.setFieldValue("lokasi", ev.detail.data);
+                        formikProps.setFieldValue(
+                          "postingLocation",
+                          ev.detail.data
+                        );
                       }
                     }}
                   >
@@ -229,7 +289,7 @@ export const Posting = () => {
                     type="submit"
                     style={{ marginTop: "20px" }}
                   >
-                    Daftar
+                    Posting
                   </IonButton>
                 </Form>
               );
