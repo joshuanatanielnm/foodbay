@@ -29,6 +29,10 @@ import { Bantuan } from "./pages/Bantuan";
 import { Invitation } from "./pages/Invitation";
 import { Policy } from "./pages/Policy";
 import { Terms } from "./pages/Terms";
+import Home from "./pages/Home";
+import { Category } from "./pages/Category";
+import { Search } from "./pages/Search";
+import { Posting } from "./pages/Posting";
 
 setupIonicReact();
 
@@ -49,6 +53,10 @@ const App: React.FC = () => {
           <Route path="/invite-friend" component={Invitation} />
           <Route path="/policy" component={Policy} />
           <Route path="/terms" component={Terms} />
+          <Route path="/home" component={Home} />
+          <Route path="/cari" component={Search} />
+          <Route path="/posting" component={Posting} />
+          <Route path="/home/:category" component={Category} />
         </IonRouterOutlet>
       </IonReactRouter>
     </IonApp>
