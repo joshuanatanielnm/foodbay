@@ -23,10 +23,10 @@ const Onboarding = () => {
       <IonSlides
         pager={true}
         options={slideOpts}
-        className="ion"
+        className="ion onboarding-slides"
         ref={mySlides}
       >
-        <IonSlide>
+        <IonSlide className="onboarding-slide">
           <div className="image-container">
             <img src="/assets/ilu1.png" alt="ilu1" />
           </div>
@@ -40,7 +40,7 @@ const Onboarding = () => {
           </div>
           <IonButton onClick={() => onBtnClicked("next")}>Lewati</IonButton>
         </IonSlide>
-        <IonSlide>
+        <IonSlide className="onboarding-slide">
           <div className="image-container">
             <img src="/assets/ilu2.png" alt="ilu1" />
           </div>
@@ -54,7 +54,7 @@ const Onboarding = () => {
           </div>
           <IonButton onClick={() => onBtnClicked("next")}>Lewati</IonButton>
         </IonSlide>
-        <IonSlide>
+        <IonSlide className="onboarding-slide">
           <div className="image-container">
             <img src="/assets/ilu3.png" alt="ilu1" />
           </div>
