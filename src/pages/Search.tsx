@@ -15,6 +15,7 @@ import { Content } from "../layout/Content";
 import { arrowBack, filterCircleOutline } from "ionicons/icons";
 import { useEffect, useRef, useState } from "react";
 import { OverlayEventDetail } from "@ionic/core/components";
+import { ContentCard } from "../components/ContentCard";
 
 type KotaProps = {
   provinsi: string;
@@ -28,7 +29,6 @@ export const Search = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [kota, setKota] = useState([]);
 
-  console.log(filter);
   const fetchDataKota = async () => {
     const data = await fetch(
       "https://raw.githubusercontent.com/mtegarsantosa/json-nama-daerah-indonesia/master/regions.json"
@@ -56,7 +56,7 @@ export const Search = () => {
   return (
     <IonPage>
       <Content>
-        <IonContent fullscreen>
+        <IonContent fullscreen className="ion-padding">
           <IonRow className="ion-justify-content-between ion-align-items-center">
             <IonCol size="10">
               <IonSearchbar placeholder="Mau makan apa hari ini?" />
@@ -67,6 +67,32 @@ export const Search = () => {
               </IonButton>
             </IonCol>
           </IonRow>
+          <div style={{ padding: 3 }}>
+            <ContentCard
+              userName="Joshua Suherman"
+              userCity="Tangerang"
+              desc="Beberapa stok sayuran yang akan dibuang jika tidak ada pembeli
+                  di Supermarket Indo..."
+              img="/assets/food/vegetable.png"
+              numberOfComment="12"
+            />
+            <ContentCard
+              userName="Joshua Suherman"
+              userCity="Tangerang"
+              desc="Beberapa stok sayuran yang akan dibuang jika tidak ada pembeli
+                  di Supermarket Indo..."
+              img="/assets/food/vegetable.png"
+              numberOfComment="12"
+            />
+            <ContentCard
+              userName="Joshua Suherman"
+              userCity="Tangerang"
+              desc="Beberapa stok sayuran yang akan dibuang jika tidak ada pembeli
+                  di Supermarket Indo..."
+              img="/assets/food/vegetable.png"
+              numberOfComment="12"
+            />
+          </div>
 
           <IonModal
             ref={modal}
@@ -90,7 +116,7 @@ export const Search = () => {
                   kota &&
                   kota.map((v: KotaProps) => {
                     return v.kota.map((kota) => (
-                      <IonItem onClick={() => confirm(kota)}>
+                      <IonItem onClick={() => confirm(kota)} key={kota}>
                         <IonLabel ref={item}>{kota}</IonLabel>
                       </IonItem>
                     ));
