@@ -15,6 +15,8 @@ import {
 } from "@ionic/react";
 import { eyeOffOutline, eyeOutline } from "ionicons/icons";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 import { TextFieldTypes } from "@ionic/core";
 
@@ -26,7 +28,7 @@ export function Signin() {
     userEmail: "",
     userPassword: "",
   };
-  const [state, setState] = useState(defaultValues);
+  let history = useHistory();
 
   const togglePasswordVisible = () => {
     if (passwordType === "password") {
@@ -34,6 +36,24 @@ export function Signin() {
     } else {
       setPasswordType("password");
     }
+  };
+
+  const handleSubmit = (values: {
+    userEmail: string;
+    userPassword: string;
+  }) => {
+    axios
+      .post("http://localhost:8080/login", {
+        userEmail: values.userEmail,
+        userPassword: values.userPassword,
+      })
+      .then((response) => {
+        window.localStorage.setItem("user", JSON.stringify(response.data));
+        history.push("/home");
+      })
+      .catch((err) => {
+        setMessage(err);
+      });
   };
 
   return (
@@ -75,7 +95,7 @@ export function Signin() {
             </IonText>
           </IonRow>
         </IonRow>
-        <Formik initialValues={state} onSubmit={() => console.log("submited")}>
+        <Formik initialValues={defaultValues} onSubmit={handleSubmit}>
           {(formikProps) => {
             return (
               <Form id="login">
