@@ -1,0 +1,51 @@
+.promo-slides {
+  height: 31vh;
+}
+
+.promo-slide {
+  height: 28vh;
+  width: 90% !important;
+}
+
+.berbagi-slides {
+  height: 40vh;
+}
+
+.berbagi-slide {
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  width: 85% !important;
+  padding-right: 20px;
+}
+
+.status-col {
+  text-align: center;
+  ion-text {
+    font-size: 12px;
+    color: #616161;
+  }
+  .type-button  {
+    border-style: solid;
+    border-color:#E0E0E0;
+    padding: 12px;
+    border-radius: 8px;
+    border-width: 1px;
+    ion-img {
+      width: 40px;
+      height: 40px;
+      margin:auto;
+    }
+  }
+}
+
+
+.food-image {
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  height: '144px' !important;
+  width: 'full';
+  object-fit: cover;
+}

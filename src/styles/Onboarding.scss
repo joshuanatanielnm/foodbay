@@ -1,15 +1,15 @@
-ion-slides {
+.onboarding-slides {
   height: 100%;
 }
 
-ion-slide {
+.onboarding-slide {
   display: flex;
   flex-direction: column;
   padding: 10px;
 }
 
 
-ion-slide ion-button {
+.onboarding-slide ion-button {
   width:100%;
   border-radius: 40% !important;
   background-color: var(--ion-color-primary);
