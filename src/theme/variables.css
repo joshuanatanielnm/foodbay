@@ -26,6 +26,11 @@ ion-toolbar {
   background-color: white;
 }
 
+.ion-fixed {
+  height: 100%;
+  width: 100%;
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
