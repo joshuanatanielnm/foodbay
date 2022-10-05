@@ -12,10 +12,11 @@ import {
   IonText,
 } from "@ionic/react";
 import { notificationsOutline } from "ionicons/icons";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Content } from "../layout/Content";
 import { ContentCard } from "../components/ContentCard";
 import "../styles/Home.scss";
+import axios from "axios";
 
 const Home: React.FC = () => {
   const slideOpts = {
@@ -23,6 +24,19 @@ const Home: React.FC = () => {
     slidesPerView: "auto",
   };
   const mySlides = useRef(null);
+  const [data, setData] = useState<any>([]);
+  const [error, setError] = useState<any>("");
+
+  useEffect(() => {
+    async function fetchData() {
+      axios.get("http://localhost:8080/posting").then((response) => {
+        setData(response.data["posting"]);
+      });
+    }
+
+    fetchData();
+  }, []);
+
   return (
     <IonPage>
       <Content>
@@ -180,24 +194,17 @@ const Home: React.FC = () => {
           </IonRow>
 
           <div style={{ padding: 3 }}>
-            <ContentCard
-              userName="Joshua Suherman"
-              userCity="Tangerang"
-              desc="Beberapa stok sayuran yang akan dibuang jika tidak ada pembeli
-                  di Supermarket Indo..."
-              img="/assets/food/vegetable.png"
-              numberOfLove="12"
-              numberOfComment="12"
-            />
-            <ContentCard
-              userName="Joshua Suherman"
-              userCity="Tangerang"
-              desc="Beberapa stok sayuran yang akan dibuang jika tidak ada pembeli
-                  di Supermarket Indo..."
-              img="/assets/food/vegetable.png"
-              numberOfLove="12"
-              numberOfComment="12"
-            />
+            {data &&
+              data.map((v: any) => (
+                <ContentCard
+                  key={v.id}
+                  userName={v.User.userProfileName}
+                  userCity={v.postingLocation}
+                  desc={v.postingDescription}
+                  img={v.postingImage}
+                  numberOfComment={v.Comment.length}
+                />
+              ))}
           </div>
 
           <div
@@ -290,7 +297,7 @@ const Home: React.FC = () => {
             </IonSlides>
           </div>
 
-          <IonRow
+          {/* <IonRow
             className="ion-justify-content-between ion-align-items-center"
             style={{ marginBottom: "10px" }}
           >
@@ -323,7 +330,6 @@ const Home: React.FC = () => {
               desc="Beberapa stok sayuran yang akan dibuang jika tidak ada pembeli
                   di Supermarket Indo..."
               img="/assets/food/vegetable.png"
-              numberOfLove="12"
               numberOfComment="12"
             />
             <ContentCard
@@ -332,10 +338,9 @@ const Home: React.FC = () => {
               desc="Beberapa stok sayuran yang akan dibuang jika tidak ada pembeli
                   di Supermarket Indo..."
               img="/assets/food/vegetable.png"
-              numberOfLove="12"
               numberOfComment="12"
             />
-          </div>
+          </div> */}
         </IonContent>
       </Content>
     </IonPage>
