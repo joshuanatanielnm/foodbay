@@ -30,6 +30,21 @@ export function Signup() {
   };
   const [state, setState] = useState(defaultValues);
 
+  const handleSubmit = (value: {
+    userName: string;
+    userEmail: string;
+    userPhone: string;
+    userPassword: string;
+  }) => {
+    fetch("http://localhost:8080/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(value),
+    }).then((res) => {
+      console.log("Request complete! response:", res);
+    });
+  };
+
   const togglePasswordVisible = () => {
     if (passwordType === "password") {
       setPasswordType("text");
@@ -76,7 +91,7 @@ export function Signup() {
             </IonText>
           </IonRow>
         </IonRow>
-        <Formik initialValues={state} onSubmit={() => console.log("submited")}>
+        <Formik initialValues={state} onSubmit={handleSubmit}>
           {(formikProps) => {
             return (
               <Form id="login">
