@@ -2,7 +2,6 @@ import { IonIcon, IonLabel, IonTabBar, IonTabButton } from "@ionic/react";
 import {
   homeOutline,
   searchOutline,
-  heartHalfOutline,
   personOutline,
   addCircleOutline,
 } from "ionicons/icons";
@@ -24,13 +23,9 @@ export const Content = ({ children }: ContentProps) => {
           <IonIcon icon={searchOutline} />
           <IonLabel>Cari</IonLabel>
         </IonTabButton>
-        <IonTabButton tab="posting">
+        <IonTabButton tab="posting" href="/posting">
           <IonIcon icon={addCircleOutline} />
           <IonLabel>Posting</IonLabel>
-        </IonTabButton>
-        <IonTabButton tab="favorite">
-          <IonIcon icon={heartHalfOutline} />
-          <IonLabel>Favorite</IonLabel>
         </IonTabButton>
         <IonTabButton tab="akun" href="/profile">
           <IonIcon icon={personOutline} />
