@@ -54,11 +54,17 @@ export const Posting = () => {
   const [state, setState] = useState(defaultValues);
   const [isLoading, setIsLoading] = useState(true);
   const [kota, setKota] = useState([]);
-  const [selectedKota, setSelectedKota] = useState();
+  const [searchKota, setSearchKota] = useState("");
   const event = new Date();
   const [storageData, setStorageData] = useState<userProps>();
   const [iserror, setIserror] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const filteredKota = kota
+    .filter((v: KotaProps) => v.provinsi.toLowerCase() === "jawa timur")
+    .map((v: KotaProps) => v.kota)
+    .flat(1)
+    .filter((v) => v.toLowerCase().includes(searchKota.toLowerCase()))
+    .map((v) => v);
 
   useEffect(() => {
     async function getStorageData() {
@@ -262,23 +268,25 @@ export const Posting = () => {
                         />
                       </IonCol>
                       <IonCol size="10">
-                        <IonSearchbar placeholder="Pilih Kota" />
+                        <IonSearchbar
+                          placeholder="Pilih Kota"
+                          onIonChange={(e) => setSearchKota(e.target.value!)}
+                          value={searchKota}
+                        />
                       </IonCol>
                     </IonRow>
                     <IonContent>
                       <IonList>
                         {!isLoading &&
-                          kota &&
-                          kota.map((v: KotaProps) => {
-                            return v.kota.map((kota) => (
-                              <IonItem
-                                onClick={() => confirmLokasi(kota)}
-                                key={kota}
-                              >
-                                <IonLabel ref={item}>{kota}</IonLabel>
-                              </IonItem>
-                            ));
-                          })}
+                          filteredKota &&
+                          filteredKota.map((kota) => (
+                            <IonItem
+                              onClick={() => confirmLokasi(kota)}
+                              key={kota}
+                            >
+                              <IonLabel ref={item}>{kota}</IonLabel>
+                            </IonItem>
+                          ))}
                       </IonList>
                     </IonContent>
                   </IonModal>
