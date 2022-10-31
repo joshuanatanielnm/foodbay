@@ -14,16 +14,17 @@ import axios from "axios";
 import { Content } from "../layout/Content";
 import { ContentCard } from "../components/ContentCard";
 
+export function capitalizeFirstLetter(string: string) {
+  return string.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
+    letter.toUpperCase()
+  );
+}
+
 export const Category = ({ match }: any) => {
   const {
     params: { category },
   } = match;
 
-  function capitalizeFirstLetter(string: string) {
-    return string.replace(/(^\w{1})|(\s+\w{1})/g, (letter) =>
-      letter.toUpperCase()
-    );
-  }
   const [data, setData] = useState<any>([]);
   const [error, setError] = useState<any>("");
   const filteredData = data.filter(
