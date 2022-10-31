@@ -203,6 +203,7 @@ const Home: React.FC = () => {
                   desc={v.postingDescription}
                   img={v.postingImage}
                   numberOfComment={v.Comment.length}
+                  id={v.id}
                 />
               ))}
           </div>
