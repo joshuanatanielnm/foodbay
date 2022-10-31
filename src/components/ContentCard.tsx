@@ -11,6 +11,7 @@ interface ContentCardProps {
   desc: string;
   img: string;
   numberOfComment: string;
+  id?: number;
 }
 
 export const ContentCard = ({
@@ -19,9 +20,13 @@ export const ContentCard = ({
   desc,
   img,
   numberOfComment,
+  id,
 }: ContentCardProps) => {
   return (
-    <div style={{ paddingBottom: "15px" }}>
+    <a
+      style={{ paddingBottom: "15px", color: "black", textDecoration: "none" }}
+      href={`/detail-food/${id}`}
+    >
       <IonRow>
         <IonText style={{ fontSize: "12px" }}>
           <span style={{ fontWeight: "bolder" }}>{userName} . </span>
@@ -62,6 +67,6 @@ export const ContentCard = ({
         </IonRow>
         <IonIcon icon={shareSocialOutline} style={{ fontSize: "24px" }} />
       </IonRow>
-    </div>
+    </a>
   );
 };
