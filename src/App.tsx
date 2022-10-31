@@ -33,6 +33,7 @@ import Home from "./pages/Home";
 import { Category } from "./pages/Category";
 import { Search } from "./pages/Search";
 import { Posting } from "./pages/Posting";
+import { DetailFood } from "./pages/DetailFood";
 
 setupIonicReact();
 
@@ -56,6 +57,7 @@ const App: React.FC = () => {
           <Route path="/home" component={Home} />
           <Route path="/cari" component={Search} />
           <Route path="/posting" component={Posting} />
+          <Route path="/detail-food/:id" component={DetailFood} />
           <Route path="/home/:category" component={Category} />
         </IonRouterOutlet>
       </IonReactRouter>
