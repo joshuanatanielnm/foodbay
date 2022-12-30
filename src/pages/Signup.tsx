@@ -23,19 +23,24 @@ export function Signup() {
   const [message, setMessage] = useState<string>("");
   const [passwordType, setPasswordType] = useState<TextFieldTypes>("password");
   const defaultValues = {
-    userName: "",
+    userProfileName: "",
     userEmail: "",
-    userPhone: "",
+    userPhoneNumber: "",
     userPassword: "",
+    userImage: "",
+    userAddress: "",
   };
   const [state, setState] = useState(defaultValues);
 
   const handleSubmit = (value: {
-    userName: string;
+    userProfileName: string;
     userEmail: string;
-    userPhone: string;
+    userPhoneNumber: string;
     userPassword: string;
+    userImage: string;
+    userAddress: string;
   }) => {
+    console.log(value);
     fetch("http://localhost:8080/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -98,9 +103,9 @@ export function Signup() {
                 <IonList className="transparent">
                   <IonItem className="input-rounded" lines="none">
                     <IonInput
-                      name="userName"
+                      name="userProfileName"
                       placeholder="Nama"
-                      value={formikProps.values.userName}
+                      value={formikProps.values.userProfileName}
                       spellCheck={false}
                       autocapitalize="off"
                       onIonChange={formikProps.handleChange}
@@ -121,9 +126,9 @@ export function Signup() {
                   </IonItem>
                   <IonItem className="input-rounded" lines="none">
                     <IonInput
-                      name="userPhone"
+                      name="userPhoneNumber"
                       placeholder="Nomor Telepon"
-                      value={formikProps.values.userPhone}
+                      value={formikProps.values.userPhoneNumber}
                       spellCheck={false}
                       autocapitalize="off"
                       onIonChange={formikProps.handleChange}

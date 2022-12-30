@@ -1,9 +1,5 @@
 import { IonIcon, IonImg, IonRow, IonText } from "@ionic/react";
-import {
-  chatboxEllipsesOutline,
-  heartOutline,
-  shareSocialOutline,
-} from "ionicons/icons";
+import { chatboxEllipsesOutline, shareSocialOutline } from "ionicons/icons";
 
 interface ContentCardProps {
   userName: string;
