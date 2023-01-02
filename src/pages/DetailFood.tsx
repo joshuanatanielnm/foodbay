@@ -41,7 +41,7 @@ export const DetailFood = ({ match }: any) => {
   useEffect(() => {
     async function fetchData() {
       axios
-        .get(`http://localhost:8080/posting/detailposting/${id}`)
+        .get(`http://172.20.10.2:8080/posting/detailposting/${id}`)
         .then((response) => {
           setData(response.data["postingDetail"]);
         });
@@ -53,7 +53,7 @@ export const DetailFood = ({ match }: any) => {
   const handleSubmit = (values: { comment: string }) => {
     setIsLoading(true);
     axios
-      .post("http://localhost:8080/comment", {
+      .post("http://172.20.10.2:8080/comment", {
         userId: data.User.id,
         postingId: data.id,
         commentTime: new Date(Date.now()).toISOString(),

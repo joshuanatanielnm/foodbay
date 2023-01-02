@@ -18,6 +18,7 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
+import { useKeyboardState } from "@ionic/react-hooks/keyboard";
 import { TextFieldTypes } from "@ionic/core";
 
 export function Signin() {
@@ -29,6 +30,7 @@ export function Signin() {
     userPassword: "",
   };
   let history = useHistory();
+  const { isOpen } = useKeyboardState();
 
   const togglePasswordVisible = () => {
     if (passwordType === "password") {
@@ -43,7 +45,7 @@ export function Signin() {
     userPassword: string;
   }) => {
     axios
-      .post("http://localhost:8080/login", {
+      .post("http://172.20.10.2:8080/login", {
         userEmail: values.userEmail,
         userPassword: values.userPassword,
       })
@@ -52,7 +54,8 @@ export function Signin() {
         history.push("/home");
       })
       .catch((err) => {
-        setMessage(err);
+        setMessage(`Wrong email or password`);
+        setIserror(true);
       });
   };
 
@@ -154,22 +157,25 @@ export function Signin() {
             );
           }}
         </Formik>
-        <IonRow>
-          <IonCol
-            size="12"
-            style={{
-              position: "absolute",
-              bottom: 0,
-              paddingBottom: "20px",
-            }}
-          >
-            <IonText>Dengan masuk atau mendaftar, Anda menyetujui </IonText>{" "}
-            <IonRouterLink href="/signup">Ketentuan Layanan</IonRouterLink>
-            <IonText> dan </IonText>
-            <IonRouterLink href="/signup">Kebijakan Privasi</IonRouterLink>
-            <IonText> kami.</IonText>
-          </IonCol>
-        </IonRow>
+        {!isOpen && (
+          <IonRow>
+            <IonCol
+              size="12"
+              style={{
+                position: "absolute",
+                display: "relative",
+                bottom: 0,
+                paddingBottom: "20px",
+              }}
+            >
+              <IonText>Dengan masuk atau mendaftar, Anda menyetujui </IonText>{" "}
+              <IonRouterLink href="/signup">Ketentuan Layanan</IonRouterLink>
+              <IonText> dan </IonText>
+              <IonRouterLink href="/signup">Kebijakan Privasi</IonRouterLink>
+              <IonText> kami.</IonText>
+            </IonCol>
+          </IonRow>
+        )}
       </IonContent>
     </IonPage>
   );

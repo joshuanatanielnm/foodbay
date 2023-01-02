@@ -29,7 +29,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     async function fetchData() {
-      axios.get("http://localhost:8080/posting").then((response) => {
+      axios.get("http://172.20.10.2:8080/posting").then((response) => {
         setData(response.data["posting"]);
       });
     }
@@ -46,9 +46,6 @@ const Home: React.FC = () => {
             style={{ paddingTop: "8px" }}
           >
             <IonCol size="9">
-              <IonRow style={{ paddingBottom: "4px" }}>
-                <IonText className="text-gray-1">Halo, Chapo Chandra</IonText>
-              </IonRow>
               <IonText
                 style={{
                   fontWeight: "bold",

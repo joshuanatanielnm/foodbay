@@ -99,7 +99,7 @@ export const Posting = () => {
           .getDownloadURL()
           .then((url) => {
             axios
-              .post("http://localhost:8080/posting", {
+              .post("http://172.20.10.2:8080/posting", {
                 userId: storageData?.user.id,
                 postingTitle: values.postingTitle,
                 postingDescription: values.postingDescription,

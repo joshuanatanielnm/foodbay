@@ -33,7 +33,7 @@ export const Category = ({ match }: any) => {
 
   useEffect(() => {
     async function fetchData() {
-      axios.get("http://localhost:8080/posting").then((response) => {
+      axios.get("http://172.20.10.2:8080/posting").then((response) => {
         setData(response.data["posting"]);
       });
     }
