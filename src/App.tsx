@@ -42,7 +42,7 @@ const App: React.FC = () => {
     isLoggedIn: false,
   };
   return (
-    <IonApp>
+    <IonApp style={{ maxWidth: "450px", margin: "auto" }}>
       <IonReactRouter>
         <IonRouterOutlet>
           <Route path="/" component={Onboarding} />

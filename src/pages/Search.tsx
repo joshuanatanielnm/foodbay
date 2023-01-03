@@ -63,7 +63,7 @@ export const Search = () => {
       .finally(() => setIsLoading(false));
 
     async function fetchData() {
-      axios.get("http://172.20.10.2:8080/posting").then((response) => {
+      axios.get("http://localhost:8080/posting").then((response) => {
         setData(response.data["posting"]);
       });
     }
@@ -119,6 +119,7 @@ export const Search = () => {
               filteredData.map((v: any) => (
                 <ContentCard
                   key={v.id}
+                  id={v.id}
                   userName={v.User.userProfileName}
                   userCity={v.postingLocation}
                   desc={v.postingDescription}

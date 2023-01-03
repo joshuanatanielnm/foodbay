@@ -43,7 +43,6 @@ export type userProps = {
 export const Profile = () => {
   const [showModal, setShowModal] = useState(false);
   const [storageData, setStorageData] = useState<userProps>();
-  console.log(storageData?.user.userImage);
   const userImage =
     storageData?.user.userImage === ""
       ? "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
@@ -62,11 +61,6 @@ export const Profile = () => {
       name: "Bantuan",
       icon: informationCircleOutline,
       href: "/help",
-    },
-    {
-      name: "Ajak teman pakai Foodbay",
-      icon: peopleOutline,
-      href: "/invite-friend",
     },
   ];
 

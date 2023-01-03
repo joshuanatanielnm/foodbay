@@ -45,7 +45,7 @@ export function Signin() {
     userPassword: string;
   }) => {
     axios
-      .post("http://172.20.10.2:8080/login", {
+      .post("http://localhost:8080/login", {
         userEmail: values.userEmail,
         userPassword: values.userPassword,
       })
@@ -144,6 +144,7 @@ export function Signin() {
                       href="/main"
                       mode="md"
                       type="submit"
+                      style={{ backgroundColor: "red" }}
                     >
                       Masuk
                     </IonButton>

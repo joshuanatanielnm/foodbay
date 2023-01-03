@@ -27,13 +27,14 @@ export const Category = ({ match }: any) => {
 
   const [data, setData] = useState<any>([]);
   const [error, setError] = useState<any>("");
-  const filteredData = data.filter(
-    (v: any) => v.postingCategory.toLowerCase() === category
-  );
+  const filteredData =
+    category === "lagi trending"
+      ? data.sort((a: any, b: any) => b.Comment.length - a.Comment.length)
+      : data.filter((v: any) => v.postingCategory.toLowerCase() === category);
 
   useEffect(() => {
     async function fetchData() {
-      axios.get("http://172.20.10.2:8080/posting").then((response) => {
+      axios.get("http://localhost:8080/posting").then((response) => {
         setData(response.data["posting"]);
       });
     }
@@ -61,6 +62,7 @@ export const Category = ({ match }: any) => {
               filteredData.map((v: any) => (
                 <ContentCard
                   key={v.id}
+                  id={v.id}
                   userName={v.User.userProfileName}
                   userCity={v.postingLocation}
                   desc={v.postingDescription}

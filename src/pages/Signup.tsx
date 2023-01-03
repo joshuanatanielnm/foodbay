@@ -43,7 +43,7 @@ export function Signup() {
     userAddress: string;
   }) => {
     console.log(value);
-    fetch("http://172.20.10.2:8080/signup", {
+    fetch("http://localhost:8080/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(value),

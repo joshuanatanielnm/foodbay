@@ -25,11 +25,10 @@ const Home: React.FC = () => {
   };
   const mySlides = useRef(null);
   const [data, setData] = useState<any>([]);
-  const [error, setError] = useState<any>("");
 
   useEffect(() => {
     async function fetchData() {
-      axios.get("http://172.20.10.2:8080/posting").then((response) => {
+      axios.get("http://localhost:8080/posting").then((response) => {
         setData(response.data["posting"]);
       });
     }
@@ -55,9 +54,6 @@ const Home: React.FC = () => {
               >
                 Berbagi Apa Hari Ini?
               </IonText>
-            </IonCol>
-            <IonCol size="2">
-              <IonIcon icon={notificationsOutline} size="large" />
             </IonCol>
           </IonRow>
 
@@ -242,7 +238,9 @@ const Home: React.FC = () => {
               ref={mySlides}
             >
               <IonSlide className="berbagi-slide">
-                <IonImg src="/assets/berbagi/berbagi1.png" alt="banner 1" />
+                <a href="https://kitabisa.com/campaign/yayasantunassehat?back_to=/search">
+                  <IonImg src="/assets/berbagi/berbagi1.png" alt="banner 1" />
+                </a>
                 <IonText
                   style={{
                     fontWeight: "bold",
@@ -259,7 +257,9 @@ const Home: React.FC = () => {
                 </IonText>
               </IonSlide>
               <IonSlide className="berbagi-slide">
-                <IonImg src="/assets/berbagi/berbagi1.png" alt="banner 1" />
+                <a href="https://kitabisa.com/campaign/pprawatinapibu">
+                  <IonImg src="/assets/berbagi/berbagi2.png" alt="banner 2" />
+                </a>
                 <IonText
                   style={{
                     fontWeight: "bold",
@@ -267,16 +267,18 @@ const Home: React.FC = () => {
                     marginTop: 6,
                   }}
                 >
-                  Bantu Anak-Anak Kanker Bertahan Hidup
+                  Biaya PP dan Makan Ibu Selama Mengajar
                 </IonText>
                 <IonText
                   style={{ color: "#616161", fontSize: 12, paddingTop: 4 }}
                 >
-                  Yayasan Tunas Sehat Indonesia
+                  Fajar Zaenal
                 </IonText>
               </IonSlide>
               <IonSlide className="berbagi-slide">
-                <IonImg src="/assets/berbagi/berbagi1.png" alt="banner 1" />
+                <a href="https://kitabisa.com/campaign/pprawatinapibu">
+                  <IonImg src="/assets/berbagi/berbagi3.png" alt="banner 3" />
+                </a>
                 <IonText
                   style={{
                     fontWeight: "bold",
@@ -284,12 +286,12 @@ const Home: React.FC = () => {
                     marginTop: 6,
                   }}
                 >
-                  Bantu Anak-Anak Kanker Bertahan Hidup
+                  Sedekah Beras untuk Santri Penghafal Al-QURAN
                 </IonText>
                 <IonText
                   style={{ color: "#616161", fontSize: 12, paddingTop: 4 }}
                 >
-                  Yayasan Tunas Sehat Indonesia
+                  Rumah Tahfidz Yatim
                 </IonText>
               </IonSlide>
             </IonSlides>

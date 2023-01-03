@@ -23,6 +23,7 @@ import {
   shareSocialOutline,
 } from "ionicons/icons";
 import { useEffect, useState } from "react";
+import { userProps } from "./Profile";
 
 export const DetailFood = ({ match }: any) => {
   const {
@@ -30,18 +31,30 @@ export const DetailFood = ({ match }: any) => {
   } = match;
 
   const [data, setData] = useState<any>();
+  const [storageData, setStorageData] = useState<userProps>();
   const [isLoading, setIsLoading] = useState(false);
-  // const phoneNumber = data.User.userPhoneNumber.replace(
-  //   data.User.userPhoneNumber[0],
-  //   62
-  // );
 
-  console.log(data);
+  const phoneNumber = data ? `${data.User.userPhoneNumber}` : "0";
+  const manipluatePhoneNumber = phoneNumber.replace(phoneNumber[0], "62");
+
+  const userPostingImage = data
+    ? data.User.userImage === ""
+      ? "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+      : data.User.userImage
+    : "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y";
+
+  useEffect(() => {
+    async function getStorageData() {
+      const getdata = window.localStorage.getItem("user");
+      getdata && setStorageData(JSON.parse(getdata));
+    }
+    getStorageData();
+  }, []);
 
   useEffect(() => {
     async function fetchData() {
       axios
-        .get(`http://172.20.10.2:8080/posting/detailposting/${id}`)
+        .get(`http://localhost:8080/posting/detailposting/${id}`)
         .then((response) => {
           setData(response.data["postingDetail"]);
         });
@@ -53,8 +66,8 @@ export const DetailFood = ({ match }: any) => {
   const handleSubmit = (values: { comment: string }) => {
     setIsLoading(true);
     axios
-      .post("http://172.20.10.2:8080/comment", {
-        userId: data.User.id,
+      .post("http://localhost:8080/comment", {
+        userId: storageData?.user.id,
         postingId: data.id,
         commentTime: new Date(Date.now()).toISOString(),
         comment: values.comment,
@@ -88,7 +101,7 @@ export const DetailFood = ({ match }: any) => {
               >
                 <img
                   alt="food detail"
-                  src={data.User.userImage}
+                  src={userPostingImage}
                   style={{
                     borderRadius: "100%",
                     width: "90px",
@@ -140,44 +153,54 @@ export const DetailFood = ({ match }: any) => {
                 />
               </IonRow>
             </div>
-            <div>
+            <div
+              style={{
+                marginBottom: 70,
+              }}
+            >
               {data.Comment.length > 0 &&
-                data.Comment.map((v: any, i: number) => (
-                  <>
-                    <div
-                      key={i}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginLeft: -20,
-                      }}
-                    >
-                      <img
-                        alt="food detail"
-                        src={v.User.userImage}
+                data.Comment.map((v: any, i: number) => {
+                  const userCommentImage =
+                    v.User.userImage === ""
+                      ? "https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y"
+                      : v.User.userImage;
+                  return (
+                    <>
+                      <div
+                        key={i}
                         style={{
-                          borderRadius: "100%",
-                          width: "90px",
-                          height: "90px",
+                          display: "flex",
+                          alignItems: "center",
+                          marginLeft: -20,
                         }}
-                      />
-                      <IonText style={{ fontSize: "12px" }}>
-                        <span style={{ fontWeight: "bolder" }}>
-                          {v.User.userProfileName}
-                        </span>
-                        <br />
-                        <span>
-                          {new Date(v.commentTime).toLocaleDateString()}
-                        </span>
-                      </IonText>
-                    </div>
-                    <div style={{ marginTop: "-10px" }}>
-                      <IonText style={{ fontSize: "14px" }}>
-                        {v.comment}
-                      </IonText>
-                    </div>
-                  </>
-                ))}
+                      >
+                        <img
+                          alt="food detail"
+                          src={userCommentImage}
+                          style={{
+                            borderRadius: "100%",
+                            width: "90px",
+                            height: "90px",
+                          }}
+                        />
+                        <IonText style={{ fontSize: "12px" }}>
+                          <span style={{ fontWeight: "bolder" }}>
+                            {v.User.userProfileName}
+                          </span>
+                          <br />
+                          <span>
+                            {new Date(v.commentTime).toLocaleDateString()}
+                          </span>
+                        </IonText>
+                      </div>
+                      <div style={{ marginTop: "-10px" }}>
+                        <IonText style={{ fontSize: "14px" }}>
+                          {v.comment}
+                        </IonText>
+                      </div>
+                    </>
+                  );
+                })}
             </div>
           </div>
           <div
@@ -186,6 +209,7 @@ export const DetailFood = ({ match }: any) => {
               position: "fixed",
               bottom: 30,
               width: "90vw",
+              maxWidth: "400px",
             }}
           >
             <Formik
@@ -252,7 +276,7 @@ export const DetailFood = ({ match }: any) => {
               backgroundColor: " #21BC58",
               borderRadius: "100%",
             }}
-            href={`https://wa.me/`}
+            href={`https://wa.me/${manipluatePhoneNumber}`}
           >
             <IonIcon
               icon={chatbubbleOutline}

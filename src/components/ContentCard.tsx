@@ -20,7 +20,11 @@ export const ContentCard = ({
 }: ContentCardProps) => {
   return (
     <a
-      style={{ paddingBottom: "15px", color: "black", textDecoration: "none" }}
+      style={{
+        paddingBottom: "15px",
+        color: "black",
+        textDecoration: "none",
+      }}
       href={`/detail-food/${id}`}
     >
       <IonRow>
